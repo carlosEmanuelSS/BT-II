@@ -9,7 +9,7 @@ const dist = path.resolve(__dirname, '..', 'dist');
 test.describe('Chrome Extension E2E Tests', () => {
   test('extension loads and popup works', async () => {
     const context = await chromium.launchPersistentContext('', {
-      headless: false,
+      headless: true,
       args: [
         `--disable-extensions-except=${dist}`,
         `--load-extension=${dist}`,
@@ -34,7 +34,7 @@ test.describe('Chrome Extension E2E Tests', () => {
 
   test('content script highlights links', async () => {
     const context = await chromium.launchPersistentContext('', {
-      headless: false,
+      headless: true,
       args: [
         `--disable-extensions-except=${dist}`,
         `--load-extension=${dist}`,
@@ -73,7 +73,7 @@ test.describe('Chrome Extension E2E Tests', () => {
 
   test('extension storage works', async () => {
     const context = await chromium.launchPersistentContext('', {
-      headless: false,
+      headless: true,
       args: [
         `--disable-extensions-except=${dist}`,
         `--load-extension=${dist}`,
@@ -106,7 +106,7 @@ test.describe('Chrome Extension E2E Tests', () => {
 
   test('background script is active', async () => {
     const context = await chromium.launchPersistentContext('', {
-      headless: false,
+      headless: true,
       args: [
         `--disable-extensions-except=${dist}`,
         `--load-extension=${dist}`,
