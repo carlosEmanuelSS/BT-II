@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página de Teste para Extensão</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        a {
+            color: #0066cc;
+            text-decoration: none;
+            margin: 5px;
+            display: inline-block;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 Página de Teste para Extensão Chrome</h1>
+    
+    <div class="container">
+        <h2>Instruções</h2>
+        <p>Esta página foi criada para testar a extensão Chrome. Certifique-se de que a extensão está carregada e ativa.</p>
+    </div>
+
+    <div class="test-section">
+        <h3>🔗 Links para Testar</h3>
+        <p>Os links abaixo devem ser destacados pela extensão:</p>
+        <a href="https://example.com">Exemplo 1</a>
+        <a href="https://google.com">Google</a>
+        <a href="https://github.com">GitHub</a>
+        <a href="https://stackoverflow.com">Stack Overflow</a>
+    </div>
+
+    <div class="test-section">
+        <h3>🧪 Testes de Funcionalidade</h3>
+        <button onclick="testStorage()">Testar Storage</button>
+        <button onclick="testContentScript()">Testar Content Script</button>
+        <button onclick="testBackground()">Testar Background</button>
+        <div id="test-results"></div>
+    </div>
+
+    <div class="test-section">
+        <h3>📊 Status da Extensão</h3>
+        <div id="extension-status">Verificando...</div>
+    </div>
+
+    <script>
+        // Teste de storage
+        function testStorage() {
+            if (typeof chrome !== 'undefined' && chrome.storage) {
+                chrome.storage.local.set({ 'testKey': 'testValue' }, () => {
+                    chrome.storage.local.get(['testKey'], (result) => {
+                        document.getElementById('test-results').innerHTML = 
+                            '<p>✅ Storage funcionando: ' + JSON.stringify(result) + '</p>';
+                    });
+                });
+            } else {
+                document.getElementById('test-results').innerHTML = 
+                    '<p>❌ Chrome APIs não disponíveis</p>';
+            }
+        }
+
+        // Teste de content script
+        function testContentScript() {
+            const indicator = document.getElementById('extension-indicator');
+            if (indicator) {
+                document.getElementById('test-results').innerHTML = 
+                    '<p>✅ Content script ativo - indicador encontrado</p>';
+            } else {
+                document.getElementById('test-results').innerHTML = 
+                    '<p>❌ Content script não detectado</p>';
+            }
+        }
+
+        // Teste de background script
+        function testBackground() {
+            if (typeof chrome !== 'undefined' && chrome.runtime) {
+                chrome.runtime.sendMessage({ action: 'getTabInfo' }, (response) => {
+                    if (response) {
+                        document.getElementById('test-results').innerHTML = 
+                            '<p>✅ Background script funcionando: ' + JSON.stringify(response) + '</p>';
+                    } else {
+                        document.getElementById('test-results').innerHTML = 
+                            '<p>❌ Background script não respondeu</p>';
+                    }
+                });
+            } else {
+                document.getElementById('test-results').innerHTML = 
+                    '<p>❌ Chrome APIs não disponíveis</p>';
+            }
+        }
+
+        // Verificar status da extensão
+        function checkExtensionStatus() {
+            const indicator = document.getElementById('extension-indicator');
+            if (indicator) {
+                document.getElementById('extension-status').innerHTML = 
+                    '<p>✅ Extensão carregada e ativa</p>';
+            } else {
+                document.getElementById('extension-status').innerHTML = 
+                    '<p>❌ Extensão não detectada</p>';
+            }
+        }
+
+        // Verificar status após carregamento
+        window.addEventListener('load', () => {
+            setTimeout(checkExtensionStatus, 1000);
+        });
+    </script>
+</body>
+</html>
