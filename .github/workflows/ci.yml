@@ -44,22 +44,3 @@ jobs:
           name: extension-zip
           path: dist/extension.zip
           retention-days: 30
-          
-      - name: Create Release
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: v${{ github.run_number }}
-          release_name: Release v${{ github.run_number }}
-          body: |
-            Automated release with extension package and test results.
-            
-            ## Extension Package
-            Download the extension ZIP from the artifacts.
-            
-            ## Test Results
-            Check the Playwright report in the artifacts for detailed test results.
-          draft: false
-          prerelease: false
